@@ -1,0 +1,8 @@
+﻿  practics.cpp
+C:\PC2025\Praktika\practics\practics\practics.cpp(11,15): error C3861: getMax: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(13,9): error C3861: countingSortLSD: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(19,15): error C3861: getMax: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(25,5): error C3861: radixSortMSDHelper: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(35,5): error C3861: saveToFile: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(47,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\PC2025\Praktika\practics\practics\practics.cpp(51,5): error C3861: saveToFile: идентификатор не найден

@@ -24,3 +24,29 @@ void radixSortMSD(int* arr, int n) {
     exp /= 10;
     radixSortMSDHelper(arr, 0, n - 1, exp);
 }
+void manualInput(int** arr, int* n) {
+    printf("Введите количество элементов: ");
+    scanf("%d", n);
+    *arr = (int*)malloc(*n * sizeof(int));
+    printf("Введите %d чисел:\n", *n);
+    for (int i = 0; i < *n; i++) {
+        scanf("%d", &(*arr)[i]);
+    }
+    saveToFile(*arr, *n, "input.txt");
+}
+
+void randomInput(int** arr, int* n) {
+    int min, max;
+    printf("Введите количество элементов: ");
+    scanf("%d", n);
+    printf("Введите минимальное значение: ");
+    scanf("%d", &min);
+    printf("Введите максимальное значение: ");
+    scanf("%d", &max);
+    *arr = (int*)malloc(*n * sizeof(int));
+    srand(time(NULL));
+    for (int i = 0; i < *n; i++) {
+        (*arr)[i] = rand() % (max - min + 1) + min;
+    }
+    saveToFile(*arr, *n, "input.txt");
+}
