@@ -3,25 +3,58 @@
 #include <stdlib.h>
 #include <time.h>
 #include <locale.h>
-#include <string.h>
-#include <limits.h>
 
+// Функция для сохранения массива в файл
 void saveToFile(int* arr, int n, const char* filename) {
     FILE* file = fopen(filename, "w");
     if (file == NULL) {
         printf("Ошибка при открытии файла для записи!\n");
         return;
     }
+
     fprintf(file, "%d\n", n);
     for (int i = 0; i < n; i++) {
         fprintf(file, "%d ", arr[i]);
     }
     fprintf(file, "\n");
+
     fclose(file);
     printf("Массив сохранён в файл: %s\n", filename);
 }
 
-// LSD Radix Sort
+// Получение максимального элемента
+int getMax(int* arr, int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+// LSD сортировка (счёт по младшим разрядам)
+void countingSortLSD(int* arr, int n, int exp) {
+    int* output = (int*)malloc(n * sizeof(int));
+    int count[10] = { 0 };
+
+    for (int i = 0; i < n; i++) {
+        count[(arr[i] / exp) % 10]++;
+    }
+    for (int i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+    for (int i = n - 1; i >= 0; i--) {
+        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+        count[(arr[i] / exp) % 10]--;
+    }
+    for (int i = 0; i < n; i++) {
+        arr[i] = output[i];
+    }
+
+    free(output);
+}
+
 void radixSortLSD(int* arr, int n) {
     int max = getMax(arr, n);
     for (int exp = 1; max / exp > 0; exp *= 10) {
@@ -29,7 +62,33 @@ void radixSortLSD(int* arr, int n) {
     }
 }
 
-// MSD Radix Sort
+// MSD сортировка (по старшим разрядам)
+void radixSortMSDHelper(int* arr, int low, int high, int exp) {
+    if (high <= low || exp == 0) return;
+
+    int count[10] = { 0 };
+    int* output = (int*)malloc((high - low + 1) * sizeof(int));
+
+    for (int i = low; i <= high; i++) {
+        count[(arr[i] / exp) % 10]++;
+    }
+    for (int i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+    for (int i = high; i >= low; i--) {
+        output[--count[(arr[i] / exp) % 10]] = arr[i];
+    }
+    for (int i = low; i <= high; i++) {
+        arr[i] = output[i - low];
+    }
+
+    free(output);
+
+    for (int i = 0; i < 9; i++) {
+        radixSortMSDHelper(arr, low + count[i], low + count[i + 1] - 1, exp / 10);
+    }
+}
+
 void radixSortMSD(int* arr, int n) {
     int max = getMax(arr, n);
     int exp = 1;
@@ -37,19 +96,33 @@ void radixSortMSD(int* arr, int n) {
         exp *= 10;
     }
     exp /= 10;
+
     radixSortMSDHelper(arr, 0, n - 1, exp);
 }
+
+// Печать массива
+void printArray(int* arr, int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Ручной ввод
 void manualInput(int** arr, int* n) {
     printf("Введите количество элементов: ");
     scanf("%d", n);
+
     *arr = (int*)malloc(*n * sizeof(int));
     printf("Введите %d чисел:\n", *n);
     for (int i = 0; i < *n; i++) {
         scanf("%d", &(*arr)[i]);
     }
+
     saveToFile(*arr, *n, "input.txt");
 }
 
+// Генерация случайного массива
 void randomInput(int** arr, int* n) {
     int min, max;
     printf("Введите количество элементов: ");
@@ -58,11 +131,13 @@ void randomInput(int** arr, int* n) {
     scanf("%d", &min);
     printf("Введите максимальное значение: ");
     scanf("%d", &max);
+
     *arr = (int*)malloc(*n * sizeof(int));
     srand(time(NULL));
     for (int i = 0; i < *n; i++) {
         (*arr)[i] = rand() % (max - min + 1) + min;
     }
+
     saveToFile(*arr, *n, "input.txt");
 }
 
