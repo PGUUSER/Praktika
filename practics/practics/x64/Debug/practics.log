@@ -6,3 +6,10 @@ C:\PC2025\Praktika\practics\practics\practics.cpp(25,5): error C3861: radixSortM
 C:\PC2025\Praktika\practics\practics\practics.cpp(35,5): error C3861: saveToFile: идентификатор не найден
 C:\PC2025\Praktika\practics\practics\practics.cpp(47,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
 C:\PC2025\Praktika\practics\practics\practics.cpp(51,5): error C3861: saveToFile: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(77,13): error C2065: swap_count: необъявленный идентификатор
+C:\PC2025\Praktika\practics\practics\practics.cpp(84,75): error C2065: swap_count: необъявленный идентификатор
+C:\PC2025\Praktika\practics\practics\practics.cpp(85,13): error C3861: saveToFile: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(92,13): error C2065: swap_count: необъявленный идентификатор
+C:\PC2025\Praktika\practics\practics\practics.cpp(99,75): error C2065: swap_count: необъявленный идентификатор
+C:\PC2025\Praktika\practics\practics\practics.cpp(100,13): error C3861: saveToFile: идентификатор не найден
+C:\PC2025\Praktika\practics\practics\practics.cpp(53,12): error C1075: "{": не найдена несоответствующая лексема
