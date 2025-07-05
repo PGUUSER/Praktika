@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <locale.h>
+#include <string.h>
+#include <limits.h>
+
+// Глобальные переменные для подсчёта перестановок
+int swap_count = 0;
 
 // Функция для сохранения массива в файл
 void saveToFile(int* arr, int n, const char* filename) {
@@ -12,7 +17,7 @@ void saveToFile(int* arr, int n, const char* filename) {
         return;
     }
 
-    fprintf(file, "%d\n", n);
+    fprintf(file, "%d\n", n); // Сохраняем количество элементов
     for (int i = 0; i < n; i++) {
         fprintf(file, "%d ", arr[i]);
     }
@@ -22,7 +27,7 @@ void saveToFile(int* arr, int n, const char* filename) {
     printf("Массив сохранён в файл: %s\n", filename);
 }
 
-// Получение максимального элемента
+// Функция для получения максимального элемента в массиве
 int getMax(int* arr, int n) {
     int max = arr[0];
     for (int i = 1; i < n; i++) {
@@ -33,21 +38,30 @@ int getMax(int* arr, int n) {
     return max;
 }
 
-// LSD сортировка (счёт по младшим разрядам)
+// Вспомогательная функция для LSD Radix Sort (сортировка подсчётом)
 void countingSortLSD(int* arr, int n, int exp) {
     int* output = (int*)malloc(n * sizeof(int));
     int count[10] = { 0 };
 
+    // Подсчёт количества элементов для каждой цифры
     for (int i = 0; i < n; i++) {
         count[(arr[i] / exp) % 10]++;
     }
+
+    // Изменение count[i] так, чтобы он содержал позицию
+    // следующего элемента с такой же цифрой
     for (int i = 1; i < 10; i++) {
         count[i] += count[i - 1];
     }
+
+    // Построение выходного массива
     for (int i = n - 1; i >= 0; i--) {
         output[count[(arr[i] / exp) % 10] - 1] = arr[i];
         count[(arr[i] / exp) % 10]--;
+        swap_count++; // Увеличиваем счётчик перестановок
     }
+
+    // Копирование выходного массива в arr[]
     for (int i = 0; i < n; i++) {
         arr[i] = output[i];
     }
@@ -55,52 +69,67 @@ void countingSortLSD(int* arr, int n, int exp) {
     free(output);
 }
 
+// LSD Radix Sort
 void radixSortLSD(int* arr, int n) {
     int max = getMax(arr, n);
+
+    // Применяем сортировку подсчётом для каждой цифры
     for (int exp = 1; max / exp > 0; exp *= 10) {
         countingSortLSD(arr, n, exp);
     }
 }
 
-// MSD сортировка (по старшим разрядам)
+// Вспомогательная функция для MSD Radix Sort (рекурсивная)
 void radixSortMSDHelper(int* arr, int low, int high, int exp) {
-    if (high <= low || exp == 0) return;
+    if (high <= low || exp == 0) {
+        return;
+    }
 
     int count[10] = { 0 };
     int* output = (int*)malloc((high - low + 1) * sizeof(int));
 
+    // Подсчёт количества элементов для каждой цифры
     for (int i = low; i <= high; i++) {
         count[(arr[i] / exp) % 10]++;
     }
+
+    // Преобразование count в индексы
     for (int i = 1; i < 10; i++) {
         count[i] += count[i - 1];
     }
+
+    // Заполнение выходного массива
     for (int i = high; i >= low; i--) {
         output[--count[(arr[i] / exp) % 10]] = arr[i];
+        swap_count++; // Увеличиваем счётчик перестановок
     }
+
+    // Копирование обратно в исходный массив
     for (int i = low; i <= high; i++) {
         arr[i] = output[i - low];
     }
 
     free(output);
 
+    // Рекурсивная сортировка для каждой цифры
     for (int i = 0; i < 9; i++) {
         radixSortMSDHelper(arr, low + count[i], low + count[i + 1] - 1, exp / 10);
     }
 }
 
+// MSD Radix Sort
 void radixSortMSD(int* arr, int n) {
     int max = getMax(arr, n);
     int exp = 1;
     while (max / exp > 0) {
         exp *= 10;
     }
-    exp /= 10;
+    exp /= 10; // Находим максимальный разряд
 
     radixSortMSDHelper(arr, 0, n - 1, exp);
 }
 
-// Печать массива
+// Функция для вывода массива
 void printArray(int* arr, int n) {
     for (int i = 0; i < n; i++) {
         printf("%d ", arr[i]);
@@ -108,7 +137,7 @@ void printArray(int* arr, int n) {
     printf("\n");
 }
 
-// Ручной ввод
+// Функция для ввода массива вручную
 void manualInput(int** arr, int* n) {
     printf("Введите количество элементов: ");
     scanf("%d", n);
@@ -118,17 +147,18 @@ void manualInput(int** arr, int* n) {
     for (int i = 0; i < *n; i++) {
         scanf("%d", &(*arr)[i]);
     }
-
     saveToFile(*arr, *n, "input.txt");
 }
 
-// Генерация случайного массива
+// Функция для генерации случайного массива
 void randomInput(int** arr, int* n) {
     int min, max;
     printf("Введите количество элементов: ");
     scanf("%d", n);
+
     printf("Введите минимальное значение: ");
     scanf("%d", &min);
+
     printf("Введите максимальное значение: ");
     scanf("%d", &max);
 
@@ -137,7 +167,6 @@ void randomInput(int** arr, int* n) {
     for (int i = 0; i < *n; i++) {
         (*arr)[i] = rand() % (max - min + 1) + min;
     }
-
     saveToFile(*arr, *n, "input.txt");
 }
 
