@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\PC2025\\Praktika\\practics\\",
+  "WorkspaceRootPath": "C:\\PC2025\\Praktika\\Praktika\\practics\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B03DF645-DB34-4DE3-9A50-A9BB10A543DE}|practics\\practics.vcxproj|C:\\PC2025\\Praktika\\practics\\practics\\practics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{B03DF645-DB34-4DE3-9A50-A9BB10A543DE}|practics\\practics.vcxproj|C:\\PC2025\\Praktika\\Praktika\\practics\\practics\\practics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B03DF645-DB34-4DE3-9A50-A9BB10A543DE}|practics\\practics.vcxproj|solutionrelative:practics\\practics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -28,11 +28,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "practics.cpp",
-              "DocumentMoniker": "C:\\PC2025\\Praktika\\practics\\practics\\practics.cpp",
+              "DocumentMoniker": "C:\\PC2025\\Praktika\\Praktika\\practics\\practics\\practics.cpp",
               "RelativeDocumentMoniker": "practics\\practics.cpp",
-              "ToolTip": "C:\\PC2025\\Praktika\\practics\\practics\\practics.cpp",
+              "ToolTip": "C:\\PC2025\\Praktika\\Praktika\\practics\\practics\\practics.cpp",
               "RelativeToolTip": "practics\\practics.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAowJAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-07-04T13:03:36.122Z",
               "EditorCaption": ""
