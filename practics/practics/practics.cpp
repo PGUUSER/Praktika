@@ -6,6 +6,21 @@
 #include <string.h>
 #include <limits.h>
 
+void saveToFile(int* arr, int n, const char* filename) {
+    FILE* file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Ошибка при открытии файла для записи!\n");
+        return;
+    }
+    fprintf(file, "%d\n", n);
+    for (int i = 0; i < n; i++) {
+        fprintf(file, "%d ", arr[i]);
+    }
+    fprintf(file, "\n");
+    fclose(file);
+    printf("Массив сохранён в файл: %s\n", filename);
+}
+
 // LSD Radix Sort
 void radixSortLSD(int* arr, int n) {
     int max = getMax(arr, n);
